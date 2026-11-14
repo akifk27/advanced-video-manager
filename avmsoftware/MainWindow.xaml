@@ -1,0 +1,640 @@
+<Window x:Class="avmsoftware.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:local="clr-namespace:avmsoftware"
+        Title="Advanced Video Manager"
+        Icon="/Assets/images/avm-logo.png"
+        Width="1280"
+        Height="800"
+        MinWidth="1100"
+        MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        StateChanged="MainWindow_StateChanged"
+        Background="#080D1D">
+
+                                                <!-- Windows başlık çubuğu yerine kendi panelimiz -->
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="6"
+                            NonClientFrameEdges="None"
+                            ResizeBorderThickness="0"
+                            GlassFrameThickness="0"
+                            CornerRadius="0"
+                            UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+
+                                                         <!-- Üst panelin arka planı -->
+        <LinearGradientBrush x:Key="TopBrush"
+                             StartPoint="0,0"
+                             EndPoint="1,1">
+            <GradientStop Color="#0A1024" Offset="0"/>
+            <GradientStop Color="#131831" Offset="0.55"/>
+            <GradientStop Color="#090D1E" Offset="1"/>
+        </LinearGradientBrush>
+
+                                                          <!-- Seçili sayfa butonu -->
+        <LinearGradientBrush x:Key="ActiveBrush"
+                             StartPoint="0,0"
+                             EndPoint="1,1">
+            <GradientStop Color="#8057F2" Offset="0"/>
+            <GradientStop Color="#4430B7" Offset="1"/>
+        </LinearGradientBrush>
+
+                                                           <!-- Üst menü butonları -->
+        <Style x:Key="NavButtonStyle"  
+               TargetType="Button">
+
+            <Setter Property="Foreground" Value="#F4F2FF"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,12"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#35366B"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                        Property="Background"
+                                        Value="#6348D0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+                                                    <!-- Pencere kontrol butonları -->
+        <Style x:Key="WindowButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource NavButtonStyle}">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="1,0"/>
+            <Setter Property="FontSize" Value="19"/>
+        </Style>
+
+        <ControlTemplate x:Key="AvmVerticalScrollBar" TargetType="ScrollBar">
+         <Border Width="12" Margin="2,2,1,2" CornerRadius="6" Background="#221C43">
+          <Track x:Name="PART_Track" Orientation="Vertical" IsDirectionReversed="True"
+                 Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}"
+                 ViewportSize="{TemplateBinding ViewportSize}"
+                 Value="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+           <Track.DecreaseRepeatButton>
+            <RepeatButton Command="ScrollBar.PageUpCommand" Focusable="False">
+             <RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate></RepeatButton.Template>
+            </RepeatButton>
+           </Track.DecreaseRepeatButton>
+           <Track.Thumb>
+            <Thumb MinHeight="22">
+             <Thumb.Template>
+              <ControlTemplate TargetType="Thumb">
+               <Border x:Name="Grip" Margin="2,0" CornerRadius="5">
+                <Border.Background>
+                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                  <GradientStop Color="#CD8AFF" Offset="0"/><GradientStop Color="#633FE1" Offset="1"/>
+                 </LinearGradientBrush>
+                </Border.Background>
+               </Border>
+               <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Grip" Property="Background" Value="#DBAAFF"/></Trigger>
+               </ControlTemplate.Triggers>
+              </ControlTemplate>
+             </Thumb.Template>
+            </Thumb>
+           </Track.Thumb>
+           <Track.IncreaseRepeatButton>
+            <RepeatButton Command="ScrollBar.PageDownCommand" Focusable="False">
+             <RepeatButton.Template><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate></RepeatButton.Template>
+            </RepeatButton>
+           </Track.IncreaseRepeatButton>
+          </Track>
+         </Border>
+        </ControlTemplate>
+        <Style x:Key="LanguageChoice" TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+         <Setter Property="MinHeight" Value="40"/>
+         <Setter Property="Background" Value="#28234D"/>
+         <Setter Property="FontSize" Value="13"/>
+         <Setter Property="Padding" Value="6"/>
+         <Setter Property="Template">
+          <Setter.Value>
+           <ControlTemplate TargetType="Button">
+            <Border x:Name="Face" Background="{TemplateBinding Background}" CornerRadius="10"
+                    BorderThickness="1" BorderBrush="#624D9D" Padding="{TemplateBinding Padding}">
+             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+             <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Face" Property="BorderBrush" Value="#D2A8FF"/></Trigger>
+             <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="Face" Property="BorderBrush" Value="White"/></Trigger>
+             <Trigger Property="IsPressed" Value="True"><Setter TargetName="Face" Property="Opacity" Value=".7"/></Trigger>
+             <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Face" Property="BorderBrush" Value="#DBB8FF"/>
+              <Setter TargetName="Face" Property="Background">
+               <Setter.Value><LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop Offset="0" Color="#8747E1"/><GradientStop Offset="1" Color="#403EB9"/></LinearGradientBrush></Setter.Value>
+              </Setter>
+              <Setter TargetName="Face" Property="Effect">
+               <Setter.Value><DropShadowEffect Color="#A85DFF" ShadowDepth="0" BlurRadius="14" Opacity=".83"/></Setter.Value>
+              </Setter>
+             </Trigger>
+            </ControlTemplate.Triggers>
+           </ControlTemplate>
+          </Setter.Value>
+         </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+                                                            <!-- ÜST PANEL -->
+        <Border Grid.Row="0"
+           Background="{DynamicResource TopBrush}"
+           BorderBrush="#293050"
+           BorderThickness="0,0,0,1"
+           MouseLeftButtonDown="TopBar_MouseLeftButtonDown" RenderTransformOrigin="0.572,0.554" Margin="0,0,0,10">
+
+            <Grid Margin="18,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                                                         <!-- LOGO VE UYGULAMA ADI -->
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+
+                    <Image Source="pack://application:,,,/Assets/images/avm-logo.png"
+                        Width="61"
+                        Height="55"
+                        Stretch="Uniform"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        SnapsToDevicePixels="True" Margin="1,5,0,0"/>
+
+
+                                                <!-- ÜST PANEL: HARFLERİN ARKASINDA MOR NEON -->
+                    <TextBlock Text="Advanced Video Manager"
+           Margin="12,0,12,0"
+           VerticalAlignment="Center"
+           FontSize="19"
+           FontWeight="Bold"
+           Foreground="White" FontFamily="Lucida Sans">
+
+                        <TextBlock.Effect>
+                            <DropShadowEffect Color="#A45CFF"
+                          BlurRadius="16"
+                          ShadowDepth="0"
+                          Opacity="0.35"/>
+                        </TextBlock.Effect>
+
+                        <TextBlock.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever"
+                            AutoReverse="True">
+                                        <DoubleAnimation
+                        Storyboard.TargetProperty="(TextBlock.Effect).(DropShadowEffect.Opacity)"
+                        From="0.15"
+                        To="0.85"
+                        Duration="0:0:2.5"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+
+                    <Border Background="#4931A9"
+                            CornerRadius="15"
+                            Padding="12,6"
+                            Height="28" RenderTransformOrigin="0.504,0.434">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="-0.804"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-0.219"/>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+
+                        <TextBlock Text="Beta V1"
+                                   Foreground="White"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
+
+                                                                <!-- ORTA MENÜ -->
+                <Border Grid.Column="1"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Background="#191F3C"
+        CornerRadius="16"
+        Padding="5" Height="60">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button x:Name="HomeButton"
+        Content="{local:Localized Tr='⌂  Ana Sayfa', En='⌂  Home'}"
+        Style="{StaticResource NavButtonStyle}"
+        Background="{StaticResource ActiveBrush}"
+        Click="Home_Click"/>
+
+                        <Button x:Name="MediaButton"
+        Content="{local:Localized Tr='↓  Medya İndir', En='↓  Download Media'}"
+        Style="{StaticResource NavButtonStyle}"
+        Click="MediaDownload_Click"/>
+
+                        <Button x:Name="EditorButton"
+        Content="{local:Localized Tr='✂  Dönüştür ve Düzenle', En='✂  Convert and Edit'}"
+        Style="{StaticResource NavButtonStyle}"
+        Click="Editor_Click"/>
+                    </StackPanel>
+                </Border>
+
+                                                             <!-- SAĞ MENÜ -->
+                <StackPanel Grid.Column="2"
+            Orientation="Horizontal"
+            VerticalAlignment="Center">
+
+                    <Button Click="ReportBug_Click" Content="{local:Localized Tr='⚑  Hata Bildir', En='⚑  Report a Bug'}"
+            Style="{StaticResource NavButtonStyle}"
+            FontSize="12"
+            Width="113"
+            RenderTransformOrigin="0.258,0.545"/>
+
+                    <Button Content="−"
+            Style="{StaticResource WindowButtonStyle}"
+            Click="Minimize_Click"
+            RenderTransformOrigin="0.52,0.58"
+            Foreground="#FF9D8EF1"
+            Margin="1,0,1,10"
+            Height="50"/>
+
+                    <Button Content="□"
+            Style="{StaticResource WindowButtonStyle}"
+            Click="Maximize_Click"
+            Foreground="#FF9D8EF1"
+            Margin="1,0,0,11"
+            Height="50"/>
+
+                                                    <!-- KIRMIZI HOVER KAPATMA BUTONU -->
+                    <Button Content="×"
+            Click="Close_Click"
+            Foreground="#FF9D8EF1"
+            Width="40"
+            Height="49"
+            Margin="1,0,0,10">
+
+                        <Button.Style>
+                            <Style TargetType="Button"
+                   BasedOn="{StaticResource WindowButtonStyle}">
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E81123"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="#B50D1B"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+
+
+            </Grid>
+        </Border>
+
+                                                              <!-- ana sayfa -->
+        <Grid x:Name="HomePage" Grid.Row="1">
+
+                                                    <!-- MAVİ-MOR GEÇİŞLİ ARKA PLAN -->
+            <Grid.Background>
+                <RadialGradientBrush Center="0.70,0.08"
+                             GradientOrigin="0.70,0.08"
+                             RadiusX="0.95"
+                             RadiusY="1.10">
+                    <GradientStop Color="#25206A" Offset="0"/>
+                    <GradientStop Color="#151C49" Offset="0.28"/>
+                    <GradientStop Color="#0D1533" Offset="0.58"/>
+                    <GradientStop Color="#080D1D" Offset="1"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+             <ScrollViewer.Resources>
+              <Style TargetType="ScrollBar">
+               <Setter Property="Template" Value="{StaticResource AvmVerticalScrollBar}"/>
+              </Style>
+             </ScrollViewer.Resources>
+             <Grid Margin="18,8,18,24">
+              <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="245"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+              <Border Margin="0,10,0,0" Padding="15" VerticalAlignment="Stretch" CornerRadius="17" BorderThickness="1" BorderBrush="#55467D">
+               <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                 <GradientStop Color="#252049" Offset="0"/><GradientStop Color="#11182F" Offset="1"/>
+                </LinearGradientBrush>
+               </Border.Background>
+               <StackPanel>
+                <StackPanel.Resources>
+                 <Style TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
+                  <Setter Property="Background" Value="#333062"/>
+                  <Setter Property="FontSize" Value="13"/>
+                  <Setter Property="Margin" Value="0,0,0,5"/>
+                  <Setter Property="Padding" Value="10,10"/><Setter Property="MinHeight" Value="42"/>
+                 </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{local:Localized Tr='⬡  Yasal Bilgiler', En='⬡  Legal Information'}" Foreground="#F4EEFF" FontWeight="SemiBold" FontSize="19" Margin="0,0,0,12"/>
+                <Button Content="{local:Localized Tr='Kullanım Koşulları  ›', En='Terms of Use  ›'}" Tag="terms" Click="Legal_Click"/>
+                <Button Content="{local:Localized Tr='AVM Lisansı  ›', En='AVM License  ›'}" Tag="license" Click="Legal_Click"/>
+                <Button Content="{local:Localized Tr='Gizlilik ve Veri Kullanımı  ›', En='Privacy and Data Use  ›'}" Tag="privacy" Click="Legal_Click"/>
+                <Button Content="{local:Localized Tr='Üçüncü Taraf Lisansları  ›', En='Third-Party Licenses  ›'}" Tag="thirdParty" Click="Legal_Click"/>
+                <Button Content="{local:Localized Tr='Medya Araçları Klasörü', En='Media Tools Folder'}" Click="ChooseTools_Click"/>
+                <Button x:Name="UpdateButton" Content="{local:Localized Tr='Güncellemeleri Kontrol Et', En='Check for Updates'}"
+                        Click="InstallUpdate_Click" Margin="-5,20,-5,11" MinHeight="58" FontSize="14">
+                 <Button.Template>
+                  <ControlTemplate TargetType="Button">
+                   <Grid>
+                    <Border Margin="0,5,0,0" CornerRadius="13" Background="#073837">
+                     <Border.Effect><DropShadowEffect Color="#000E18" ShadowDepth="5" BlurRadius="12" Opacity=".75"/></Border.Effect>
+                    </Border>
+                    <Border x:Name="UpdateFace" Margin="0,0,0,5" CornerRadius="13" BorderBrush="#73E8D2" BorderThickness="1">
+                     <Border.Background>
+                      <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                       <GradientStop Color="#208A7D" Offset="0"/><GradientStop Color="#11514E" Offset="1"/>
+                      </LinearGradientBrush>
+                     </Border.Background>
+                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                   </Grid>
+                   <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="UpdateFace" Property="BorderBrush" Value="#D3FFF4"/></Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="UpdateFace" Property="BorderBrush" Value="White"/></Trigger>
+                    <Trigger Property="IsPressed" Value="True"><Setter TargetName="UpdateFace" Property="Margin" Value="0,4,0,1"/></Trigger>
+                    <Trigger Property="IsEnabled" Value="False"><Setter TargetName="UpdateFace" Property="Opacity" Value=".65"/></Trigger>
+                   </ControlTemplate.Triggers>
+                  </ControlTemplate>
+                 </Button.Template>
+                </Button>
+                <TextBlock Text="{local:Localized Tr='Uygulama dili', En='App language'}" Foreground="#E3D9FC" Margin="0,12,0,6"/>
+                <UniformGrid Columns="2">
+                 <Button x:Name="TurkishLanguageButton" Style="{StaticResource LanguageChoice}" Content="Türkçe" Tag="tr" Click="Language_Click" Margin="0,0,4,0"/>
+                 <Button x:Name="EnglishLanguageButton" Style="{StaticResource LanguageChoice}" Content="English" Tag="en" Click="Language_Click" Margin="4,0,0,0"/>
+                </UniformGrid>
+               </StackPanel>
+              </Border>
+              <Viewbox Grid.Column="1" Margin="16,0,0,0" StretchDirection="DownOnly" HorizontalAlignment="Center"><StackPanel
+            MaxWidth="1003"
+            HorizontalAlignment="Center">
+
+                                                         <!-- BANNER ALTINDAKİ YATAY ÇİZGİ -->
+                    <Border x:Name="TurkishBanner" Width="934"
+                    Height="306"
+                    CornerRadius="20">
+
+
+                        <Border.RenderTransform>
+                            <TranslateTransform X="-20"/>
+                        </Border.RenderTransform>
+
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Assets/images/avmbanner.png"
+                                Stretch="UniformToFill"/>
+                        </Border.Background>
+
+                    </Border>
+                    <Border x:Name="EnglishBanner" Visibility="Collapsed" Width="934" Height="306"
+                            CornerRadius="20" Background="#131A37" BorderBrush="#734BD2" BorderThickness="1" Padding="30">
+                     <Grid>
+                      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="380"/></Grid.ColumnDefinitions>
+                      <StackPanel VerticalAlignment="Center" Margin="0,0,24,0">
+                       <TextBlock Text="Advanced Video Manager" FontSize="34" FontWeight="Bold" Foreground="#C1B1FF"/>
+                       <TextBlock Text="Download online media, convert files and edit video on your Windows PC." FontSize="20"
+                                  TextWrapping="Wrap" Foreground="#E6E9FF" Margin="0,14,0,14"/>
+                       <TextBlock Text="↓  Download     ⇄  Convert     ✂  Edit" FontSize="18" Foreground="#A7DBFF"/>
+                      </StackPanel>
+                      <Border Grid.Column="1" CornerRadius="14">
+                       <Border.Background><ImageBrush ImageSource="/Assets/images/avmbanner.png" Viewbox="0.57,0.175,0.41,0.58" Stretch="Uniform"/></Border.Background>
+                      </Border>
+                     </Grid>
+                    </Border>
+
+
+                                                        <!-- BANNER ALTINDAKİ YATAY ÇİZGİ -->
+                    <Border Height="1"
+                    Background="#343C65"
+                    Margin="0,24,0,22"/>
+
+                                                          <!-- KARŞILAŞTIRMA BÖLÜMÜ -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                                                               <!-- SOL: MP4 -> GIF -->
+                        <StackPanel Grid.Column="0"
+                            Margin="0,0,18,0">
+
+                            <TextBlock FontSize="18"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,18"><Run Text="{local:Localized Tr='▧  Kısa videolarını ', En='▧  Turn short videos into '}"
+                             Foreground="White"/><Run Text=" "/><Run Text="{local:Localized Tr='GIF’e çevirin', En='GIFs'}"
+                             Foreground="#D25CFF"/></TextBlock>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                                            <!-- 1.JPG -->
+                                <Border Grid.Column="0"
+                                 Height="140"
+                                 Width="200"
+                                CornerRadius="14"
+                                BorderBrush="#454F8C"
+                                BorderThickness="1" Margin="-13,0,31,0" Grid.ColumnSpan="2">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Assets/images/1gif.jpg"
+                                            Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+
+                                <TextBlock Grid.Column="1"
+                                   Text="➜"
+                                   FontSize="25"
+                                   Foreground="#C65CFF"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                                                                <!-- 2.JPG -->
+                                <Border Grid.Column="1"
+                                Width="200"
+                                Height="140"
+                                CornerRadius="14"
+                                BorderBrush="#8057F2"
+                                BorderThickness="1" Grid.ColumnSpan="2" Margin="32,0,-14,0">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Assets/images/2gif.jpg"
+                                            Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+
+                            </Grid>
+                        </StackPanel>
+
+                                                           <!-- DİKEY AYIRICI -->
+                        <Border Grid.Column="1"
+                        Background="#343C65"/>
+
+                                                           <!-- SAĞ: 250 MB -> 85 MB -->
+                        <StackPanel Grid.Column="2"
+                            Margin="18,0,0,0">
+
+                            <TextBlock FontSize="18"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,18"><Run Text="{local:Localized Tr='▱  Büyük hacimli dosyanızı tek tıkla ', En='▱  Reduce large files '}"
+                             Foreground="White"/><Run Text=" "/><Run Text="{local:Localized Tr='küçültün', En='in one click'}"
+                             Foreground="#D25CFF"/></TextBlock>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="143*"/>
+                                    <ColumnDefinition Width="111*"/>
+                                    <ColumnDefinition Width="26*"/>
+                                    <ColumnDefinition Width="38"/>
+                                    <ColumnDefinition Width="280*"/>
+                                </Grid.ColumnDefinitions>
+
+                                       <!-- 3.JPG -->
+                                <Border Grid.Column="0"
+                                Height="140"
+                                        Width="200"
+                                CornerRadius="14"
+                                BorderBrush="#454F8C"
+                                BorderThickness="1" Grid.ColumnSpan="4" Margin="-16,0,31,0">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Assets/images/3video.jpg"
+                                            Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+
+                                <TextBlock Grid.Column="3"
+                                   Text="➜"
+                                   FontSize="25"
+                                   Foreground="#C65CFF"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+                                      <!-- 4.JPG -->
+                                <Border Grid.Column="3"
+                                Height="140"
+                                      Width="200"
+                                CornerRadius="14"
+                                BorderBrush="#8057F2"
+                                BorderThickness="1" Grid.ColumnSpan="2" Margin="32,0,-16,0">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/Assets/images/4video.jpg"
+                                            Stretch="UniformToFill"/>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
+
+                        </StackPanel>
+                    </Grid>
+                </StackPanel></Viewbox>
+              <Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0,8,0,0" Background="#10162C" CornerRadius="16">
+               <Grid><Viewbox x:Name="TurkishQuickPanel" Stretch="Uniform">
+                <Rectangle Width="2094" Height="266" AutomationProperties.Name="AVM Hızlı Ayarlar">
+                 <Rectangle.Fill>
+                  <ImageBrush ImageSource="/Assets/images/quickpanel.png" Viewbox="0.01520037,0.57320442,0.96453247,0.36740331" Stretch="Fill"/>
+                 </Rectangle.Fill>
+                </Rectangle>
+               </Viewbox>
+               <Border x:Name="EnglishQuickPanel" Visibility="Collapsed" Padding="22" CornerRadius="16" BorderThickness="1" BorderBrush="#8251E2">
+                <Border.Background>
+                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                  <GradientStop Color="#332058" Offset="0"/><GradientStop Color="#111A35" Offset="1"/>
+                 </LinearGradientBrush>
+                </Border.Background>
+                <Grid>
+                 <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="1.25*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                 <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                  <TextBlock Text="Quick Settings" FontSize="25" FontWeight="Bold" Foreground="#F3EDFF"/>
+                  <TextBlock Text="Adjust color and file size with a preset." TextWrapping="Wrap" Foreground="#DAD2F3" Margin="0,8,0,0"/>
+                 </StackPanel>
+                 <Border Grid.Column="1" Height="106" CornerRadius="10">
+                  <Border.Background><ImageBrush ImageSource="/Assets/images/quickpanel.png" Viewbox="0.322,0.657,0.22,0.235" Stretch="UniformToFill"/></Border.Background>
+                 </Border>
+                 <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="20,0,0,0">
+                  <TextBlock Text="Color Settings" FontSize="17" FontWeight="SemiBold" Foreground="#D3BEFF"/>
+                  <TextBlock Text="Resolution · Bitrate · FPS" TextWrapping="Wrap" Foreground="#F3EDFF" Margin="0,8,0,0"/>
+                 </StackPanel>
+                </Grid>
+               </Border></Grid>
+
+              </Border>
+             </Grid>
+            </ScrollViewer>
+        </Grid>
+        <!-- MEDYA İNDİR SAYFASI -->
+        <local:mediawindow x:Name="MediaPage"
+                           Grid.Row="1"
+                           Visibility="Collapsed"/>
+
+                                                  <!-- DÖNÜŞTÜR VE DÜZENLE SAYFASI -->
+        <local:editwindow x:Name="EditorPage"
+                          Grid.Row="1"
+                          Visibility="Collapsed"/>
+    </Grid>
+</Window>
+
+
+
+
+
+
+
+
+
+
+
