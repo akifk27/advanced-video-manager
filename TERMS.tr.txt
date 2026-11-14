@@ -1,0 +1,150 @@
+ADVANCED VIDEO MANAGER (AVM)
+SON KULLANICI SÖZLEŞMESİ VE KULLANIM KOŞULLARI
+
+Sürüm: 1.0  
+Son güncelleme: 14 Kasım 2026  
+Yazılım: Advanced Video Manager (AVM)  
+Geliştirici: M.Akif Kızılcık
+
+1. Amaç ve Kapsam
+
+Bu sözleşme, Advanced Video Manager (AVM) adlı Windows masaüstü uygulamasının kullanımına ilişkin temel koşulları açıklar.
+
+AVM; kullanıcıların video ve ses dosyalarını indirmesine, dönüştürmesine, düzenlemesine ve yönetmesine yardımcı olmak amacıyla geliştirilmiş, ücretsiz ve açık kaynaklı bir yazılımdır.
+
+AVM, bağımsız bir bireysel geliştirici tarafından geliştirilmektedir. Yazılım herhangi bir ticari kuruluş adına sunulmamaktadır.
+
+Bu sözleşme, AVM'nin kullanım koşullarını düzenler. Yazılımın kaynak koduna ilişkin haklar ayrıca yayımlanan açık kaynak lisansına tabidir.
+
+2. Ücretsiz Kullanım ve Dağıtım
+
+AVM bu sürümde ücretsiz olarak sunulmaktadır.
+
+Geliştirici, yazılımın gelecekte de ücretsiz kalacağını, belirli özelliklerin sürekli sunulacağını veya kesintisiz teknik destek sağlanacağını taahhüt etmez.
+
+AVM'nin kaynak kodunun kullanılması, değiştirilmesi ve yeniden dağıtılması, GNU GPL sürüm 3 veya sonrasının (GPL-3.0-or-later) koşullarına tabidir.
+
+Bu sözleşme, ilgili açık kaynak lisansının kullanıcılara tanıdığı hakları sınırlandıracak şekilde yorumlanamaz.
+
+3. Kullanıcının Sorumlulukları
+
+AVM, video ve ses içeriklerinin indirilmesi ve işlenmesi için teknik araçlar sunar.
+
+Kullanıcı;
+
+- İndirdiği, dönüştürdüğü, düzenlediği ve paylaştığı içerikler üzerinde gerekli haklara veya izinlere sahip olmaktan,
+- Telif hakkı, kişisel verilerin korunması ve diğer uygulanabilir mevzuata uymaktan,
+- Üçüncü taraf internet sitelerinin ve hizmetlerin geçerli kullanım koşullarına uygun davranmaktan,
+- Yazılımı hukuka aykırı faaliyetlerde kullanmamaktan
+
+sorumludur.
+
+AVM'nin belirli bir içeriği teknik olarak indirebilmesi, o içeriğin indirilmesinin veya kullanılmasının hukuken izinli olduğu anlamına gelmez.
+
+4. Telif Hakları ve Üçüncü Taraf Platformlar
+
+AVM, üçüncü taraf internet platformlarından bağımsız olarak geliştirilmiştir.
+
+Aksi açıkça belirtilmedikçe AVM'nin YouTube veya diğer içerik platformlarıyla resmî bir ortaklığı, sponsorluğu veya bağlantısı bulunmamaktadır.
+
+Üçüncü taraf platformlardaki içeriklerin telif hakları ilgili hak sahiplerine aittir.
+
+Geliştirici, kullanıcıların AVM aracılığıyla indirdiği veya işlediği içerikler üzerinde hak sahibi olduğunu iddia etmez.
+
+Kullanıcıların yazılımı kullanırken gerçekleştirdiği işlemlerin hukuka uygunluğu, somut olayın koşullarına göre değerlendirilir.
+
+5. Yazılımın Mevcut Haliyle Sunulması
+
+AVM, yürürlükteki hukukun izin verdiği ölçüde, "OLDUĞU GİBİ" (AS IS) sunulmaktadır.
+
+Geliştirici; yazılımın hatasız, kesintisiz, güvenli, her cihazla uyumlu veya belirli bir amaca uygun çalışacağını garanti etmez.
+
+Özellikle beta sürümlerinde beklenmeyen hatalar, çökmeler, indirme başarısızlıkları, dönüştürme sorunları veya performans problemleri meydana gelebilir.
+
+Kullanıcılara önemli dosyalarının yedeklerini almaları tavsiye edilir.
+
+6. Veri Kaybı ve Sorumluluğun Sınırlandırılması
+
+AVM'nin kullanılması sırasında dosya bozulması, veri kaybı, hatalı dönüştürme, başarısız indirme veya benzeri teknik sorunlar meydana gelebilir.
+
+Garanti ve sorumluluk, uygulanabilir hukukun izin verdiği ölçüde GNU GPL Lisansının 15. ve 16. bölümlerine tabidir.
+
+Bu hüküm; kasıt, ağır kusur veya yürürlükteki mevzuat gereğince sınırlandırılması ya da kaldırılması mümkün olmayan sorumlulukları ortadan kaldırmaz.
+
+Bu sözleşmedeki hiçbir hüküm, kullanıcıların kanunen vazgeçilemeyen haklarını geçersiz kılmaz.
+
+7. Üçüncü Taraf Yazılımlar
+
+AVM, bazı işlevlerini yerine getirmek amacıyla FFmpeg, FFprobe, yt-dlp, Deno ve diğer açık kaynak bileşenlerden yararlanabilir.
+
+Bu bileşenlerin telif hakları ve lisansları ilgili hak sahiplerine aittir.
+
+AVM'nin kendi kaynak kodu için seçilen lisans, üçüncü taraf bileşenlerin lisanslarının yerine geçmez.
+
+Gerekli lisans bildirimleri ve ilgili kaynak kodu sağlama bilgileri, dağıtımın niteliğine ve uygulanabilir lisans koşullarına uygun şekilde ayrıca sunulur.
+
+8. Güncellemeler ve Yazılımın Geliştirilmesi
+
+AVM aktif geliştirme sürecinde olabilir.
+
+Geliştirici; yeni özellikler ekleyebilir, mevcut özellikleri değiştirebilir, hataları düzeltebilir veya yazılımın geliştirilmesini durdurabilir.
+
+Güncellemelerin belirli aralıklarla yayımlanacağı garanti edilmez.
+
+AVM, ana pencere açıldığında GitHub Releases üzerinden yeni sürüm olup olmadığını kontrol eder. İndirme ve kurulum, kullanıcı güncellemeyi başlatıp onayladığında yapılır.
+
+9. Gizlilik ve Veri İşleme
+
+AVM'nin indirme ve düzenleme işlevleri kullanıcı cihazında çalışacak şekilde tasarlanmıştır.
+
+Ancak video indirme işlemleri sırasında ilgili internet platformlarıyla ve gerekli üçüncü taraf hizmetlerle ağ iletişimi kurulabilir.
+
+Güncelleme denetimi GitHub hizmetine ağ isteği gönderir. İndirme geçmişi ve sözleşme onayı cihazda saklanır. Güncelleme denetimi medya dosyalarını, geçmişi veya onay kaydını GitHub hizmetine göndermez.
+
+Bu sözleşme, bağımsız bir gizlilik politikasının yerine geçmez. Kişisel veri işlenmesi halinde uygulanabilir veri koruma yükümlülükleri ayrıca değerlendirilir.
+
+10. Açık Kaynak Lisansı ve Fikrî Haklar
+
+AVM'nin geliştiriciye ait özgün kaynak kodu, GitHub deposunda belirtilen açık kaynak lisansı kapsamında sunulur.
+
+Kaynak kodunun kullanılması, değiştirilmesi ve dağıtılması bakımından ilgili lisans hükümleri geçerlidir.
+
+Advanced Video Manager adı, AVM logosu ve projeye özgü görsel unsurlar üzerindeki olası haklar, uygulanabilir fikrî mülkiyet ve marka mevzuatı çerçevesinde değerlendirilir.
+
+Kaynak koduna verilen açık kaynak lisansı, üçüncü kişilere kendilerini AVM'nin resmî geliştiricisi veya temsilcisi olarak tanıtma yetkisi vermez.
+
+Bu sözleşme, herhangi bir marka tescili veya mevcut olmayan münhasır marka hakkı oluşturmaz.
+
+11. Diğer Platformlar ve Gelecekteki Uygulamalar
+
+Bu sözleşme, Advanced Video Manager'ın Windows masaüstü sürümü için hazırlanmıştır.
+
+Gelecekte aynı veya benzer adla yayımlanabilecek mobil uygulamalar, ilgili uygulamaların kendi lisans ve kullanım koşullarına tabi olabilir.
+
+Windows sürümünün açık kaynak olarak yayımlanması, geliştiricinin bağımsız olarak geliştireceği diğer uygulamaları otomatik olarak aynı lisansla yayımlamasını gerektirmez. Bununla birlikte, kullanılan üçüncü taraf veya yeniden kullanılan açık kaynak kodların lisans yükümlülükleri saklıdır.
+
+12. Sözleşme Değişiklikleri
+
+Geliştirici, yazılımın gelişimine veya hukuki gerekliliklere bağlı olarak bu kullanım koşullarını güncelleyebilir.
+
+Güncellenmiş metin GitHub deposunda veya yazılımın ilgili bölümünde yayımlanabilir.
+
+Değişiklikler, geçmişte verilmiş ve geri alınamaz açık kaynak lisansı haklarını ortadan kaldırmaz. Yeni koşulların kullanıcılara uygulanabilirliği yürürlükteki hukuka tabidir.
+
+13. Uygulanacak Hukuk
+
+Bu sözleşme, uygulanabilir emredici hukuk kuralları ve kullanıcıların kanunen korunan hakları saklı kalmak kaydıyla Türkiye Cumhuriyeti hukuku çerçevesinde yorumlanır.
+
+Yetkili mahkeme ve merciler, ilgili mevzuat hükümlerine göre belirlenir.
+
+14. İletişim
+
+Yazılımla ilgili bildirimler, hata raporları ve geri bildirimler için AVM'nin resmî GitHub deposundaki iletişim ve sorun bildirme kanalları kullanılabilir.
+
+GitHub: https://github.com/akifk27/advanced-video-manager
+
+---
+
+© 2026 M.Akif Kızılcık
+
+Bu kullanım koşulları, yazılımın kaynak koduna uygulanan açık kaynak lisansıyla birlikte değerlendirilmelidir.
